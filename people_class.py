@@ -23,6 +23,7 @@ class People:
             print("Customers table is already created")
         else:
             # create the tables
+            print("Creating customer table \n")
             self.cursor.execute("""CREATE TABLE Customer(
                                 PassportID VARCHAR(20) NOT NULL IDENTITY PRIMARY KEY,
                                 TaxNumber VARCHAR(20) NOT NULL,
@@ -40,6 +41,7 @@ class People:
             # stop the function and print message if table is already created
             print("Employee table is already created")
         else:
+            print("Creating employee table \n")
             self.cursor.execute("""CREATE TABLE Staff(
                                     StaffPassportID VARCHAR(20) NOT NULL IDENTITY PRIMARY KEY,
                                     FirstName VARCHAR(MAX) NOT NULL,
@@ -54,6 +56,8 @@ class People:
 # only do these tests if running from this file
 if __name__ == "__main__":
     testing = People("1235876584NP", "Chicken", "Little")
-    print(testing.tax_number)
+    print(testing.passport_number)
     print(testing.first_name)
     print(testing.surname)
+    testing.create_employee_table()
+    testing.create_customer_table()
