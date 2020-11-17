@@ -10,14 +10,14 @@ class Booking:
         self.ticket_price = 100
         self.total_tickets = 0
 
-
-
     def validation_check(self):
         if self.available_seats == 0:
             quit()
         check = input("Is the ticket, passport and visa valid for travel to destination? (Y/N)    ")
         if check.lower() == "y":
             self.total_cost()
+        if check.lower() == "exit":
+            quit()
         else:
             return
 
@@ -58,10 +58,10 @@ class Booking:
             pass
 
         print(f"\nYou have ordered {tickets_ordered} tickets: \n"
-        f"{adult_tickets} Adult tickets \n"
-        f"{child_tickets} Child tickets \n"
-        f"{lap_child_tickets} Lap Child tickets \n"
-        f"Your order total is £{order_total} \n")
+              f"{adult_tickets} Adult tickets \n"
+              f"{child_tickets} Child tickets \n"
+              f"{lap_child_tickets} Lap Child tickets \n"
+              f"Your order total is £{order_total} \n")
 
         confirmation = input("Would you like to continue with the purchase? (Y/N)    ")
         if confirmation == "y":
@@ -77,14 +77,13 @@ class Booking:
             self.available_seats -= child_tickets
         return print(f"There are {self.available_seats} seats remaining on the flight \n \n")
 
-
     # def order_details(self):
-        # cursor.execute(f"""INSERT INTO #booking table#
-        #                         (OrderID, FlightID, lap_child_tickets, child_tickets, adult_tickets, total_price)
-        #                 VALUES
-        #                         (OrderID, FlightID, {self.lap_child_tickets}, {self.child_tickets}, {self.adult_tickets}, {self.order_total})
-        #                 """)
-        # conn.commit()
+    # cursor.execute(f"""INSERT INTO #booking table#
+    #                         (OrderID, FlightID, lap_child_tickets, child_tickets, adult_tickets, total_price)
+    #                 VALUES
+    #                         (OrderID, FlightID, {self.lap_child_tickets}, {self.child_tickets}, {self.adult_tickets}, {self.order_total})
+    #                 """)
+    # conn.commit()
 
 
 test = Booking(400)
