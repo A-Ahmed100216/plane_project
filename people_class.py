@@ -18,13 +18,13 @@ class People:
         self.surname = surname
 
     # function to create a table within the database for passengers
-    def create_passenger_table(self):
-        if cursor.tables(table="Passengers", tableType="TABLE").fetchone():
+    def create_customer_table(self):
+        if self.cursor.tables(table="Customer", tableType="TABLE").fetchone():
             # stop the function and print message if table is already created
             print("Passengers table is already created")
         else:
             # create the tables
-            self.cursor.execute("""CREATE TABLE Passengers(
+            self.cursor.execute("""CREATE TABLE Customer(
                                 PassportID VARCHAR(20) NOT NULL IDENTITY PRIMARY KEY,
                                 FirstName VARCHAR(MAX) NOT NULL,
                                 Surname VARCHAR(MAX) NOT NULL,
@@ -35,7 +35,7 @@ class People:
 
     # function to create a table within the database for the staff
     def create_employee_table(self):
-        if cursor.tables(table="Employee", tableType="TABLE").fetchone():
+        if self.cursor.tables(table="Employee", tableType="TABLE").fetchone():
             # stop the function and print message if table is already created
             print("Employee table is already created")
         else:
