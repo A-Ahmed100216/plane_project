@@ -5,15 +5,15 @@
 
 # import Connection from the connection class that Donovan is
 # making
-from connection_class import Connection
+from db_connection_class import DB_Connection
 
 # create a People class. Superclass of Passengers and Staff
 
 
 class People:
     # initialise the class with variable
-    def __init__(self, tax_number, first_name, surname):
-        self.tax_number = tax_number
+    def __init__(self, passport_number, first_name, surname):
+        self.passport_number = passport_number
         self.first_name = first_name
         self.surname = surname
 
@@ -21,11 +21,12 @@ class People:
     def create_customer_table(self):
         if self.cursor.tables(table="Customer", tableType="TABLE").fetchone():
             # stop the function and print message if table is already created
-            print("Passengers table is already created")
+            print("Customers table is already created")
         else:
             # create the tables
             self.cursor.execute("""CREATE TABLE Customer(
                                 PassportID VARCHAR(20) NOT NULL IDENTITY PRIMARY KEY,
+                                TaxNumber VARCHAR(20) NOT NULL,
                                 FirstName VARCHAR(MAX) NOT NULL,
                                 Surname VARCHAR(MAX) NOT NULL,
                                 FlightID INT NOT NULL REFERENCES Flight_Trip(FlightID),
@@ -47,6 +48,8 @@ class People:
                                     Gender VARCHAR(10),
                                     Occupation VARCHAR(20)
                                     );""")
+
+
 # only do these tests if running from this file
 if __name__ == "__main__":
     testing = People("1235876584NP", "Chicken", "Little")
