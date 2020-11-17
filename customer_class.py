@@ -19,7 +19,7 @@ class Customer(People):
         self.number_of_infants = number_of_infants
 
 
-    # Add data to the
+    # Add data to the Customer table using INSERT
     def add_to_customer_table(self, passport_number, first_name, surname,
                               tax_number):
         pass

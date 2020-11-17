@@ -3,8 +3,7 @@
 # vim:fenc=utf-8
 #
 
-# import Connection from the connection class that Donovan is
-# making
+# import Connection from the connection class that D made
 from db_connection_class import DB_Connection
 
 # create a People class. Superclass of Passengers and Staff
@@ -33,6 +32,7 @@ class People:
                                 Gender VARCHAR(10),
                                 Boarded_Flight BOOLEAN
                                 );""")
+            self.cursor.commit()
 
     # function to create a table within the database for the staff
     def create_employee_table(self):
@@ -48,6 +48,7 @@ class People:
                                     Gender VARCHAR(10),
                                     Occupation VARCHAR(20)
                                     );""")
+            self.cursor.commit()
 
 
 # only do these tests if running from this file

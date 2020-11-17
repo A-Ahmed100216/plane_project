@@ -4,6 +4,12 @@
 
 ## People Class
 
+* Import the class to enable connection to the database
+```python
+# import Connection from the connection class that D made
+from db_connection_class import DB_Connection
+```
+
 * Create a class for People, and initiate it with the `tax_number`, `first_name`, and `surname` variables
 ```python
 # create a People class. Superclass of Passengers and Staff
