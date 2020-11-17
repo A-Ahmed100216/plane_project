@@ -1,6 +1,11 @@
 # Engineering 74: Plane Project
 
  # Plane Project
+## Requirements
+* To access database one needs to install the `pyodbc` module
+```sh
+pip install pyodbc
+```
 
 ## People Class
 
