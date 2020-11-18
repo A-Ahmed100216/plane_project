@@ -82,37 +82,55 @@ class Aircraft(DB_Connection):
     def show_table(self):
         aircraft_table=self.cursor.execute("SELECT * FROM aircraft").fetchall()
         return aircraft_table
-
-    # Define method for adding new data
-    def add_data(self):
-        craft_type = input("Please enter the type of craft i.e helicopter or plane: ")
-        # if craft_type!="helicopter" or craft_type!="plane":
-        #     print("invalid input. Please enter helicopter or plane")
-        #     return craft_type
+```
+* A method is defined to add new data. While statements have been utilised to prevent invalid data from being inputted.
+```python
+ def add_aircraft_data(self):
+        # Use a while loop to ensure the user enters either helicopter or plane.
+        while True:
+            craft_type = input("Please enter the type of craft i.e helicopter or plane: ")
+            if craft_type=="plane" or craft_type=="helicopter":
+                break
+            else:
+                print("Invalid input")
+        # Ask user to input the aircraft model.
         model = input("Please enter the aircraft model: ")
-        try:
-            capacity = int(input("Please enter the craft capacity: "))
-            travel_class=int(input("Please enter the class configuration: "))
-            terminal = int(input("Please enter the terminal number: "))
-        except ValueError as err:
-            print("Please enter a number")
-            return
-        finally:
-            pass
+        # Use another while loop to ensure the capacity is a number and realistic
+        while True:
+            capacity = input("Please enter the craft capacity: ")
+            if capacity.isdigit() and 0<int(capacity)<850:
+                break
+            else:
+                print("Invalid input, you have exceeded capacity constraints.")
 
-        self.cursor.execute(f"INSERT INTO aircraft (Type, Model, Capacity, Num_Classes,Terminal) VALUES ('{craft_type}', '{model}',{capacity},{travel_class},{terminal})")
+        while True:
+            try:
+                travel_class = int(input("Please enter the class configuration: "))
+                if 0<=travel_class<=3:
+                    break
+                else:
+                    print("Invalid input, there are a maximum of three classes ")
+            except TypeError as err:
+                print("Invalid input, please enter a number")
+
+        # Use if statements to assign to terminals automatically
+        if craft_type=="plane" and int(capacity)>=200:
+            terminal =1
+        elif craft_type=="helicopter":
+            terminal =3
+        else:
+            terminal = 2
+
+        self.cursor.execute(f"INSERT INTO aircraft (Type, Model, Capacity, Num_Classes,Terminal) VALUES ('{craft_type}','{model}',{capacity},{travel_class},{terminal})")
         # self.connection.commit()
+```
 
 
-class Query(DB_Connection):
-
-    def sql_query(self):
-        query = input("Please enter your sql query    ")
-        exported_data = pd.read_sql_query(f'{query}', self.connection)
-        df_2 = pd.DataFrame(exported_data)
-        print(df_2)
+   
 
 
+* The class is then instantiated 
+```python
 # Instantiate class
 test=Aircraft()
 # test.create_table()
@@ -120,14 +138,21 @@ test=Aircraft()
 # test.helicopter()
 test.add_data()
 print(test.show_table())
-
-#
-# query=Query()
-# query.sql_query()
-
-
-
-
-
 ```
+
+* A testing class checks to see whether the create table function will throw an error if it is executed more than once, as expected. 
+```python
+import unittest
+import pytest
+from aircraft_class import Aircraft,Query
+
+class TestAircraft(unittest.TestCase):
+    aircraft=Aircraft()
+
+    def test_create_table(self):
+        # The table has already been created so the following test checks whether an error is raised.
+        self.assertRaises(Exception,self.aircraft.create_table())
+```
+
+
 

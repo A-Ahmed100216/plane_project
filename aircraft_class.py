@@ -22,7 +22,7 @@ class Aircraft(DB_Connection):
         self.land=bool
 
     # Create methods for creating table
-    def create_table(self):
+    def create_aircraft_table(self):
         # Create a table in the database to store aircraft data
         crafts = self.cursor.execute("CREATE TABLE aircraft (craft_id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,Type VARCHAR(20), Model VARCHAR(100), Capacity INT, Num_Classes INT, Terminal INT);")
         # self.connection.commit()
@@ -52,12 +52,12 @@ class Aircraft(DB_Connection):
 
 
 
-    def show_table(self):
+    def show_aircraft_table(self):
         aircraft_table=self.cursor.execute("SELECT * FROM aircraft").fetchall()
         return aircraft_table
 
     # Define method for adding new data
-    def add_data(self):
+    def add_aircraft_data(self):
         # Use a while loop to ensure the user enters either helicopter or plane.
         while True:
             craft_type = input("Please enter the type of craft i.e helicopter or plane: ")
@@ -89,11 +89,9 @@ class Aircraft(DB_Connection):
         if craft_type=="plane" and int(capacity)>=200:
             terminal =1
         elif craft_type=="helicopter":
-            terminal =2
+            terminal =3
         else:
-            terminal = 3
-
-
+            terminal = 2
 
         self.cursor.execute(f"INSERT INTO aircraft (Type, Model, Capacity, Num_Classes,Terminal) VALUES ('{craft_type}','{model}',{capacity},{travel_class},{terminal})")
         # self.connection.commit()
@@ -109,17 +107,17 @@ class Query(DB_Connection):
 
 
 # Instantiate class
-test=Aircraft()
-# test.create_table()
+# test=Aircraft()
+# test.create_aircraft_table()
 # test.plane()
 # test.helicopter()
-test.add_data()
-print(test.show_table())
+# test.add_aircraft_data()
+# print(test.show_aircraft_table())
 
-# #
+
 # query=Query()
 # query.sql_query()
-#
+
 
 
 
