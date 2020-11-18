@@ -58,6 +58,33 @@ class User_functions(Booking):
         else:
             return
 
+    # generate those on specific flight
+    def show_on_aircraft(self, flight_id):
+        # check if customers, employees, and flight_trip table are available
+        if self.cursor.tables(table="Customers", tableType="TABLE").fetchone():
+            if self.cursor.tables(table="Employees", tableType="TABLE").fetchone():
+                if self.cursor.tables(table="Flight_Trip", tableType="TABLE").fetchone():
+            # SQL statement to get out those on the aircraft that are customers
+                    customer_query = self.cursor.execute(f"""SELECT Flight_Trip.Flight_ID, Customers.PassportNumber,
+                                                            Customers.FirstName, Customers.Surname FROM Customers
+                                                            JOIN Flight_Trip ON
+                                                            Flight_Trip.Flight_ID = Customers.Flight_ID
+                                                            WHERE {flight_id};""")
+                    employees_query = self.cursor.execute(f"""SELECT Flight_Trip.Flight_ID, Employees.PassportNumber,
+                                                            Employees.FirstName, Employees.Surname FROM Employees
+                                                            JOIN Flight_Trip ON
+                                                            Flight_Trip.Flight_ID = Employees.Flight_ID
+                                                            WHERE {flight_id};""")
+            print(f"Customers on flight {flight_id} are as below: \n")
+            # for loop to print the results of the sql query
+            for rows in customer_query:
+                print(rows)
+
+            print(f"Employees on flight {flight_id} are as below: \n")
+            # for loop to print the results of the sql query
+            for rows in employees_query:
+                print(rows)
+
     def book_flight(self):
         self.validation_check()
 

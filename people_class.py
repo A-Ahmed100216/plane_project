@@ -30,7 +30,6 @@ class People:
 
             print("Creating customers table \n")
             self.test.cursor.execute("""CREATE TABLE Customers(
-
                                 PassportID VARCHAR(20) NOT NULL PRIMARY KEY,
                                 TaxNumber VARCHAR(20) NOT NULL,
                                 FirstName VARCHAR(MAX) NOT NULL,
@@ -52,7 +51,6 @@ class People:
 
             print("Creating employees table \n")
             self.test.cursor.execute("""CREATE TABLE Employees(
-
                                     StaffPassportID VARCHAR(20) NOT NULL PRIMARY KEY,
                                     FirstName VARCHAR(MAX) NOT NULL,
                                     Surname VARCHAR(MAX) NOT NULL,
