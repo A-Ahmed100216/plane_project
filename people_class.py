@@ -20,13 +20,17 @@ class People:
 
     # function to create a table within the database for passengers
     def create_customer_table(self):
+
         if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
+
             # stop the function and print message if table is already created
             print("Customers table is already created")
         else:
             # create the tables
+
             print("Creating customers table \n")
             self.test.cursor.execute("""CREATE TABLE Customers(
+
                                 PassportID VARCHAR(20) NOT NULL PRIMARY KEY,
                                 TaxNumber VARCHAR(20) NOT NULL,
                                 FirstName VARCHAR(MAX) NOT NULL,
@@ -39,12 +43,16 @@ class People:
 
     # function to create a table within the database for the staff
     def create_employee_table(self):
+
         if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
+
             # stop the function and print message if table is already created
             print("Employees table is already created")
         else:
+
             print("Creating employees table \n")
             self.test.cursor.execute("""CREATE TABLE Employees(
+
                                     StaffPassportID VARCHAR(20) NOT NULL PRIMARY KEY,
                                     FirstName VARCHAR(MAX) NOT NULL,
                                     Surname VARCHAR(MAX) NOT NULL,
