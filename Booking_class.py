@@ -3,6 +3,7 @@
 # Cost method
 # Seat counter (See how many seats are available. If seat is sold, subtract from seats available before.)
 
+# importing relevant modules
 from db_connection_class import DB_Connection
 from customer_class import Customer
 import pandas as pd
@@ -19,6 +20,7 @@ class Booking(Customer):
         self.infant_tickets = infant_tickets
         self.order_total = 0
 
+    # asks the employee if the ticket, vis and passport are valid to travel
     def validation_check(self):
         if self.available_seats == 0:
             quit()
@@ -28,6 +30,7 @@ class Booking(Customer):
         else:
             quit()
 
+    # function to work out the total cost of the tickets
     def total_cost(self):
         print(f"There are currently {self.available_seats} seats remaining")
         tickets_ordered = 0
@@ -76,22 +79,22 @@ class Booking(Customer):
 
     def order_details(self, adult_tickets, child_tickets, infant_tickets, order_total):
 
-        self.cursor.execute(f"""INSERT INTO #booking table#
-                                (OrderID, FlightID, infant_tickets, child_tickets, adult_tickets, total_price)
+        self.test.cursor.execute(f"""INSERT INTO Booking_Details
+                                (Order_ID, Flight_ID, infant_tickets, child_tickets, adult_tickets, total_price)
                         VALUES
-                                (OrderID, FlightID, {infant_tickets}, {child_tickets}, {adult_tickets}, {order_total})
+                                (Order_ID, Flight_ID, {infant_tickets}, {child_tickets}, {adult_tickets}, {order_total})
                         """)
-        self.connection.commit()
+        self.test.connection.commit()
 
         exported_data = pd.read_sql_query(
             f'SELECT *  FROM #booking_table# WHERE First_name = {self.first_name}',
-            self.connection)
+            self.test.connection)
         df = pd.DataFrame(exported_data)
 
         "Here are the details of your order \n" \
         f"{df}"
 
     def amend_booking(self):
-        self.cursor.execute(
-            f'DELETE FROM #bookingtable# where first_name = {self.first_name}')
+        self.test.cursor.execute(
+            f'DELETE FROM Booking_Details where first_name = {self.first_name}')
         print("The booking has been deleted")

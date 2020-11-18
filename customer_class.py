@@ -23,17 +23,14 @@ class Customer(People):
 
                               tax_number, flight_id, gender, boarded_flight):
         # check if the table is created
-        if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
+        # if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
             # do the SQL INSERT queries
-            self.test.connection.execute(f"""INSERT INTO Customers(
-                                        PassportID,TaxNumber,FirstName,Surname,FlightID,Gender,Boarded_Flight
-                                        ) VALUES (
-                                        {passport_number},{tax_number},{first_name},{surname},{flight_id},
-                                        {gender}, {boarded_flight}
-                                      );""")
-            self.test.connection.commit()
-        else:
-            print("Customers table does not exist, please try again")
+        self.test.connection.execute(f"""INSERT INTO Customers (PassportID, TaxNumber, FirstName, Surname, Flight_ID, Gender, Boarded_Flight) 
+                                    VALUES ('{passport_number}','{tax_number}','{first_name}','{surname}','{flight_id}','{gender}', '{boarded_flight}');""")
+        self.test.connection.commit()
+
+        # else:
+        #     print("Customers table does not exist, please try again")
 
     # function to show all the customers
     def show_customers(self):

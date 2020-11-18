@@ -26,7 +26,7 @@ class User_functions(Booking):
             self.add_to_customer_table(passport_number, first_name, surname, tax_number, flight_id, gender,
                                        boarded_flight)
 
-        if user_input.lower() == "book flight" or "1":
+        if user_input.lower() == "book flight" or "4":
             self.book_flight()
 
         if user_input.lower() == "delete booking" or "5":
