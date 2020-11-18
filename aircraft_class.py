@@ -16,6 +16,7 @@ class DB_Connection:
 class Aircraft(DB_Connection):
     def __init__(self):
         super().__init__()
+        # Attributes of an aircraft include flying, fueling and landing
         self.fly=bool
         self.refuel=bool
         self.land=bool
@@ -57,26 +58,44 @@ class Aircraft(DB_Connection):
 
     # Define method for adding new data
     def add_data(self):
-        craft_type = input("Please enter the type of craft i.e helicopter or plane: ")
-        while craft_type=="helicopter" or craft_type=="plane":
-            break
-        else:
-            print("Invalid, please enter helicopter or plane")
-            return craft_type
-
-
+        # Use a while loop to ensure the user enters either helicopter or plane.
+        while True:
+            craft_type = input("Please enter the type of craft i.e helicopter or plane: ")
+            if craft_type=="plane" or craft_type=="helicopter":
+                break
+            else:
+                print("Invalid input")
+        # Ask user to input the aircraft model.
         model = input("Please enter the aircraft model: ")
-        try:
-            capacity = int(input("Please enter the craft capacity: "))
-            travel_class=int(input("Please enter the class configuration: "))
-            terminal = int(input("Please enter the terminal number: "))
-        except ValueError as err:
-            print("Please enter a number")
-            return
-        finally:
-            pass
+        # Use another while loop to ensure the capacity is a number and realistic
+        while True:
+            capacity = input("Please enter the craft capacity: ")
+            if capacity.isdigit() and 0<int(capacity)<850:
+                break
+            else:
+                print("Invalid input, you have exceeded capacity constraints.")
 
-        self.cursor.execute(f"INSERT INTO aircraft (Type, Model, Capacity, Num_Classes,Terminal) VALUES ('{craft_type}', '{model}',{capacity},{travel_class},{terminal})")
+        while True:
+            try:
+                travel_class = int(input("Please enter the class configuration: "))
+                if 0<=travel_class<=3:
+                    break
+                else:
+                    print("Invalid input, there are a maximum of three classes ")
+            except TypeError as err:
+                print("Invalid input, please enter a number")
+
+        # Use if statements to assign to terminals automatically
+        if craft_type=="plane" and int(capacity)>=200:
+            terminal =1
+        elif craft_type=="helicopter":
+            terminal =2
+        else:
+            terminal = 3
+
+
+
+        self.cursor.execute(f"INSERT INTO aircraft (Type, Model, Capacity, Num_Classes,Terminal) VALUES ('{craft_type}','{model}',{capacity},{travel_class},{terminal})")
         # self.connection.commit()
 
 
@@ -94,13 +113,13 @@ test=Aircraft()
 # test.create_table()
 # test.plane()
 # test.helicopter()
-# test.add_data()
-# print(test.show_table())
+test.add_data()
+print(test.show_table())
 
-#
+# #
 # query=Query()
 # query.sql_query()
-
+#
 
 
 
