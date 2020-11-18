@@ -30,7 +30,7 @@ class Flight_Trip(Aircraft):
         destination = str(input("Where are you flying to? "))
         duration = float(input("How many hours is this flight? "))
         date = str(input("Please enter the date of this flight ==> "))
-        time = str(input("What time is the fligh? "))
+        time = str(input("What time is the flight? "))
 
         self.cursor.execute(f"INSERT INTO Flight_Trip (craft_id, Destination, Duration_hrs, Scheduled) VALUES ('{craft_id}', '{destination}', '{duration}', '{date}', '{time}');")
 
