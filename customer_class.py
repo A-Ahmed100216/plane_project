@@ -25,7 +25,7 @@ class Customer(People):
         # check if the table is created
         if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
             # do the SQL INSERT queries
-            self.test.connection.execute("""INSERT INTO Customers(
+            self.test.connection.execute(f"""INSERT INTO Customers(
                                         PassportID,TaxNumber,FirstName,Surname,FlightID,Gender,Boarded_Flight
                                         ) VALUES (
                                         {passport_number},{tax_number},{first_name},{surname},{flight_id},
@@ -49,4 +49,3 @@ class Customer(People):
 if __name__ == "__main__":
     customer = Customer("68546354", "chicken", "little", "6532168354")
     customer.add_to_customer_table("iauhrdsfd", "seoufnse", "Chicken1", "Little1", "0", "NB", 0)
-

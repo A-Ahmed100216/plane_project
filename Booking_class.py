@@ -8,12 +8,12 @@ from customer_class import Customer
 import pandas as pd
 
 
-class Booking(DB_Connection, Customer)
-    def __init__(self, adult_tickets, child_tickets, infant_tickets):
-        super().__init__()
+class Booking(Customer):
+    def __init__(self, adult_tickets, child_tickets, infant_tickets, passport_number, first_name, surname, tax_number):
+        super().__init__(passport_number, first_name, surname, tax_number)
         self.available_seats = 400
         self.ticket_price = 100
-        self.total_tickets = 0
+        self.total_tickets = (adult_tickets + child_tickets + infant_tickets)
         self.adult_tickets = adult_tickets
         self.child_tickets = child_tickets
         self.infant_tickets = infant_tickets
