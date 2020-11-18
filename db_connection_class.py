@@ -1,9 +1,12 @@
-import pyodbc  #Import pyodbc so that you can connect to a database
+
+import pyodbc  # Import pyodbc so that you can connect to a database
+
 
 # Create a class that connects to the database
 class DB_Connection():
     def __init__(self):
         self.server = "databases1.spartaglobal.academy"
+
         self.database = "bada_airlines"  # the name of our newly created database
         self.username = "SA"
         self.password = "Passw0rd2018"
