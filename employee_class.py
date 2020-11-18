@@ -21,7 +21,7 @@ class Employees(People):
         # check if the table is created
         if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
             # do the SQL INSERT queries
-            self.test.connection.execute("""INSERT INTO Employees(
+            self.test.connection.execute(f"""INSERT INTO Employees(
                                         StaffPassportID,FirstName,Surname,FlightID,Gender,Occupation
                                         ) VALUES (
                                         {passport_number},{first_name},{surname},{flight_id},
