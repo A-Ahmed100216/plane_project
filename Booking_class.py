@@ -5,8 +5,8 @@
 
 
 class Booking:
-    def __init__(self, total_seats):
-        self.available_seats = total_seats
+    def __init__(self):
+        self.available_seats = 400
         self.ticket_price = 100
         self.total_tickets = 0
 
@@ -16,10 +16,8 @@ class Booking:
         check = input("Is the ticket, passport and visa valid for travel to destination? (Y/N)    ")
         if check.lower() == "y":
             self.total_cost()
-        if check.lower() == "exit":
-            quit()
         else:
-            return
+            quit()
 
     def total_cost(self):
         print(f"There are currently {self.available_seats} seats remaining")
@@ -85,7 +83,3 @@ class Booking:
     #                 """)
     # conn.commit()
 
-
-test = Booking(400)
-while True:
-    test.validation_check()
