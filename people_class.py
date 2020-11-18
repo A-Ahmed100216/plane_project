@@ -54,15 +54,6 @@ class People:
                                     );""")
             self.test.cursor.commit()
 
-    # function to show all the customers
-    def show_customers(self):
-        if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
-            customers = self.test.cursor.execute("""SELECT * FROM Customers""")
-            # for loop to print all the rows of customers
-            for rows in customers:
-                print(rows)
-        else:
-            print("Customers table does not exist, please try again")
 
 # only do these tests if running from this file
 if __name__ == "__main__":
