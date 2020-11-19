@@ -53,7 +53,7 @@ GO
 * Now people should be able to access the databases that you create, though you may want to create separate users within this, so that they can only access what you want them to
 
 * For more information on docker with MSSQL, see the links below
-	* ![](https://docs.microsoft.com/en-gb/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash)
+	* ![Microsoft Documentation](https://docs.microsoft.com/en-gb/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash)
 
 ## People Class
 
