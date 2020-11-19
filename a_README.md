@@ -28,6 +28,8 @@ class People:
         self.surname = surname
 ```
 
+* **Note, the `Flight_Trip` table must have been created before these functions to create these tables are called, due to them referencing this table**
+
 * Create a function to create the actual table to hold the customers, with a check if the table has already been made (and prints a message if has), otherwise creates the table
 ```python
     # function to create a table within the database for passengers
@@ -67,5 +69,83 @@ class People:
                                     );""")
 ```
 
-* Create some tests in an `if __name__ == "__main__"` statement so that they only run when this file is being created
-	;kjadshfv
+* Create some tests in an `if __name__ == "__main__"` statement so that they only run when this file is being called directly
+```python
+    # initialise an object for testing
+    testing = People("1235876910", "Chicken", "Little")
+    # print out various attributes to make sure that it has
+    # been properly initialised
+    print(testing.passport_number)
+    print(testing.first_name)
+    print(testing.surname)
+    # test the creation of tables functions
+    testing.create_customer_table()
+    testing.create_employee_table()
+```
+
+## Customers Class
+
+* First import the `People` and `DB_Connection` classes
+```python
+from people_class import People
+from db_connection import DB_Connection
+```
+* Create the class `Customer` that inherits from `People`
+```python
+# Class for the Customers that inherits from People
+class Customer(People):
+```
+
+* Declare the variables in the constructor (.i.e. `__init__` method)
+```python
+    # initialise the class
+    def __init__(self, passport_number, first_name, surname, tax_number):
+        # inherit these variables from the people class
+        super().__init__(passport_number, first_name, surname)
+        self.tax_number = tax_number
+        # connection instance to be used later,
+        # rather than inherit from this class
+        self.test = DB_Connection()
+```
+
+* A relatively simple function to add a user to the `Customers` table is seen below. It takes all the attributes within the function call, so that the user can be asked for input within the `user_interface` file further down the road, which is then piped into this function
+```python
+    # Add data to the Customer table using INSERT
+    def add_to_customer_table(self, passport_number, first_name, surname,tax_number, flight_id, gender, boarded_flight):
+        # check if the table is created
+        if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
+            # do the SQL INSERT queries
+            self.test.connection.execute(f"""INSERT INTO Customers(
+                                        PassportID,TaxNumber,FirstName,Surname,Flight_ID,Gender,Boarded_Flight
+                                        ) VALUES (
+                                        '{passport_number}','{tax_number}','{first_name}','{surname}',{flight_id},
+                                        '{gender}', {boarded_flight});""")
+            # commit the SQL statement to the database
+            self.test.connection.commit()
+        else:
+            # a message to inform the user what is going on
+            print("Customers table does not exist, please try again")
+```
+
+* A function to show all the current customers utilises a simple `SELECT * FROM <table_name>` statement with a for loop to output the results
+```python
+    # function to show all the customers
+    def show_customers(self):
+        # check if the table is created
+        if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
+            customers = self.test.cursor.execute("""SELECT * FROM Customers""")
+            # for loop to print all the rows of customers
+            for rows in customers:
+                print(rows)
+        else:
+            # a message to inform the user what is going on
+            print("Customers table does not exist, please try again")
+```
+
+* Again, tests are done at the end of the file to ensure things are running smoothly
+```python
+# used to ensure these tests only are done when calling from this file
+if __name__ == "__main__":
+    customer = Customer("68546354", "Harry", "Potter", "653214")
+    customer.add_to_customer_table("68546354", "Harry", "Potter", "653214", "2", "Male", 0)
+```
