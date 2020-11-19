@@ -149,3 +149,76 @@ if __name__ == "__main__":
     customer = Customer("68546354", "Harry", "Potter", "653214")
     customer.add_to_customer_table("68546354", "Harry", "Potter", "653214", "2", "Male", 0)
 ```
+
+
+## Employee Class
+
+* Import from the relevant libraries and classes (the same ones as in the `Customer` class)
+```python
+# import from the relevant files
+from people_class import People
+from db_connection import DB_Connection
+```
+
+* Create the `Employee` class that inherits from `People`
+```python
+# create the class that inherits from People
+class Employees(People):
+```
+
+* Initialise the class and the attributes
+```python
+    # initialise the class
+    def __init__(self, passport_number, first_name, surname, gender, occupation):
+        # inherit these variables from the People class
+        super().__init__(passport_number, first_name, surname)
+        self.gender = gender
+        self.occupation = occupation
+        # connection instance to be used later
+        self.test = DB_Connection()
+```
+
+* A function to add an employee to the `Employee` table. Functionally similar to the `add_to_customer_table` function in `Customer`
+```python
+    # Add data to the Customer table using INSERT
+    def add_to_employees_table(self, passport_number, first_name, surname,
+                               gender, occupation, flight_id):
+        # check if the table is created
+        if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
+            # do the SQL INSERT queries
+            self.test.connection.execute(f"""INSERT INTO Employees(
+                                        StaffPassportID,FirstName,Surname,Flight_ID,Gender,Occupation
+                                        ) VALUES (
+                                        '{passport_number}','{first_name}','{surname}','{flight_id}',
+                                        '{gender}', '{occupation}'
+                                      );""")
+            self.test.connection.commit()
+        else:
+            # message to show user if table does not exist
+            print("Employees table does not exist, please try again")
+```
+
+* A function to show all employees, again, functionally similar to the customer variant
+```python
+    # function to show all the employees in records
+    def show_all_employees(self):
+        # check if the table has been created
+        if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
+            employees = self.test.connection.execute("""SELECT * FROM Employees""").fetchall()
+            # for loop to print all thw records in the table
+            for rows in employees:
+                print(rows)
+        else:
+            # message to show user if table does not exist
+            print("Employees table does not exist, please try again")
+```
+
+* Finally, some tests are made on an instantiated object of this class, again in such a way that they will only work when this file is being called directly
+```python
+# testing below this so that they are only run when this file is directly being run
+if __name__ == "__main__":
+    # instantiate an object and test all the functions
+    employees = Employees("102901092", "Chicken", "Little", "Male", "Pilot")
+    employees.add_to_employees_table("102901092", "Chicken", "Little", "Male", "Pilot", "1")
+    employees.show_all_employees()
+```
