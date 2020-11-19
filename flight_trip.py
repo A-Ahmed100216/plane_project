@@ -34,11 +34,11 @@ class Flight_Trip(DB_Connection):
         craft_id = input("Please enter the aircraft ID number for this flight ==> ")
         destination = str(input("Where are you flying to? "))
         duration = int(input("How many hours is this flight? "))
-        date = str(input("Please enter the date of this flight(dd/mm/yyy) ==> "))
+        date = str(input("Please enter the date of this flight(dd/mm/yyyy) ==> "))
         time = str(input("What time is the flight?(hh:mm) "))
 
         # insert these newly assigned variables into the DB table
-        self.cursor.execute(f"INSERT INTO Flight_Trip (craft_id, Destination, Duration_hrs, Date, Time) VALUES ('{craft_id}', '{destination}', '{duration}', '{date}', '{time}');")
+        self.cursor.execute(f"INSERT INTO Flight_Trip (craft_id, Destination, Duration_hrs, Scheduled_Date, Scheduled_Time) VALUES ('{craft_id}', '{destination}', '{duration}', '{date}', '{time}');")
 
         self.connection.commit()
 
