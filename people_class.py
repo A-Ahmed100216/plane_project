@@ -16,17 +16,16 @@ class People:
         self.first_name = first_name
         self.surname = surname
         # need to create an instance of the connection class to use
+        # since I am not inheriting directly from it
         self.test = DB_Connection()
 
     # function to create a table within the database for passengers
     def create_customer_table(self):
         if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
-
             # stop the function and print message if table is already created
             print("Customers table is already created")
         else:
             # create the tables
-
             print("Creating customers table \n")
             self.test.cursor.execute("""CREATE TABLE Customers(
                                 PassportID VARCHAR(20) NOT NULL PRIMARY KEY,
@@ -42,12 +41,11 @@ class People:
     # function to create a table within the database for the staff
     def create_employee_table(self):
         if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
-
             # stop the function and print message if table is already created
             print("Employees table is already created")
         else:
-
             print("Creating employees table \n")
+            # statement to create the table
             self.test.cursor.execute("""CREATE TABLE Employees(
                                     StaffPassportID VARCHAR(20) NOT NULL PRIMARY KEY,
                                     FirstName VARCHAR(MAX) NOT NULL,
@@ -61,10 +59,13 @@ class People:
 
 # only do these tests if running from this file
 if __name__ == "__main__":
+    # initialise an object for testing
     testing = People("1235876584NP", "Chicken", "Little")
-    testing.test
+    # print out various attributes to make sure that it has
+    # been properly initialised
     print(testing.passport_number)
     print(testing.first_name)
     print(testing.surname)
+    # test the creation of tables functions
     testing.create_customer_table()
     testing.create_employee_table()
