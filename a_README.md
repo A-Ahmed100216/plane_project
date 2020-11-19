@@ -6,6 +6,54 @@
 ```sh
 pip install pyodbc
 ```
+## Setting Up Microsoft SQL Server In Docker
+
+* First ensure docker is running on the server/local machine that you are using. If you have a systemd based machine you can use:
+`sudo systemctl status docker.service`
+
+* Download the relevant docker image of MSSQL
+`sudo docker pull mcr.microsoft.com/mssql/server`
+
+* Start the docker container
+```
+sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=<YourStrong@Passw0rd>" \
+   -p 1433:1433 --name <name_of_choice> -h <probably_the_same_name> \
+   -d mcr.microsoft.com/mssql/server
+ ```
+
+* View if the container is running
+`sudo docker ps -a`
+
+
+* Change the password (or keep the same) that you previously gave with the following command, as it will prevent anyone with access to the container from seeing the SA password that you have previously chosen
+```
+sudo docker exec -it <name_of_choice> /opt/mssql-tools/bin/sqlcmd \
+   -S localhost -U SA -P "<YourStrong@Passw0rd>" \
+   -Q 'ALTER LOGIN SA WITH PASSWORD="<YourNewStrong@Passw0rd>"'
+```
+
+* To connect to the SQL server inside the container, one has to access the container with
+` sudo docker exec -it <name_of_choice> "bash"`
+
+* To access the actual SQL server itself run
+`/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "<YourNewStrong@Passw0rd>"`
+
+* Tah-dah, now you are now on your SQL database! One small difference than running from Azure Data Studio or the like is that you need to input `GO` after each of your commands (preferably after you have pressed enter) .e.g.
+```sql
+CREATE DATABASE chickens
+
+GO
+```
+
+* This isn't the end of the road though, if you want people to be able to access this SQL server, you need to allow network access to this. Firstly, you need to map the SQL Server to a port on the actual computer (likely the same one you chose before, 1433). **Note, you need the SQL Server command-line tools installed on the device that is hosting the docker container before you can do this**
+`sqlcmd -S <ip_address>,1433 -U SA -P "<YourNewStrong@Passw0rd>"`
+
+* Finally, you need to remember to open up this port in your firewall and enable port forwarding for this device and for this port on your router (very variable so no examples here)
+
+* Now people should be able to access the databases that you create, though you may want to create separate users within this, so that they can only access what you want them to
+
+* For more information on docker with MSSQL, see the links below
+	* ![](https://docs.microsoft.com/en-gb/sql/linux/quickstart-install-connect-docker?view=sql-server-ver15&pivots=cs1-bash)
 
 ## People Class
 
