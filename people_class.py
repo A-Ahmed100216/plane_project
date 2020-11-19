@@ -1,14 +1,7 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim:fenc=utf-8
-#
-
 # import Connection from the connection class that D made
-from db_connection_class import DB_Connection
+from db_connection import DB_Connection
 
 # create a People class. Superclass of Passengers and Staff
-
-
 class People:
     # initialise the class with variable
     def __init__(self, passport_number, first_name, surname):
@@ -60,7 +53,7 @@ class People:
 # only do these tests if running from this file
 if __name__ == "__main__":
     # initialise an object for testing
-    testing = People("1235876584NP", "Chicken", "Little")
+    testing = People("1235876910", "Chicken", "Little")
     # print out various attributes to make sure that it has
     # been properly initialised
     print(testing.passport_number)

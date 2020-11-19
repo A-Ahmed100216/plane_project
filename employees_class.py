@@ -1,10 +1,5 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim:fenc=utf-8
-#
-
 from people_class import People
-from db_connection_class import DB_Connection
+from db_connection import DB_Connection
 
 
 class Employees(People):
@@ -22,10 +17,10 @@ class Employees(People):
         if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
             # do the SQL INSERT queries
             self.test.connection.execute(f"""INSERT INTO Employees(
-                                        StaffPassportID,FirstName,Surname,FlightID,Gender,Occupation
+                                        StaffPassportID,FirstName,Surname,Flight_ID,Gender,Occupation
                                         ) VALUES (
-                                        {passport_number},{first_name},{surname},{flight_id},
-                                        {gender}, {occupation}
+                                        '{passport_number}','{first_name}','{surname}','{flight_id}',
+                                        '{gender}', '{occupation}'
                                       );""")
             self.test.connection.commit()
         else:
@@ -44,6 +39,5 @@ class Employees(People):
 
 
 if __name__ == "__main__":
-    employees = Employees("p;kuahsdf", "Chicken2", "Little2", "A", "Pilot")
-    employees.add_to_employees_table("13573ljkhg", "ONETQO", "YOMA", "M",
-                                     "Pilot", "0")
+    employees = Employees("102901092", "Chicken", "Little", "Male", "Pilot")
+    employees.add_to_employees_table("102901092", "Chicken", "Little", "Male", "Pilot", "1")
