@@ -11,7 +11,7 @@ class DB_Connection():
         self.connection = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + self.server + ';DATABASE=' + self.database + ';UID=' + self.username + ';PWD=' + self.password)
 
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor() # Create a cursor to use when referring to the DB
 
 
 # create and instance of this class to test the connection
