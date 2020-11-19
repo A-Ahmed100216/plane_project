@@ -20,7 +20,6 @@ class People:
 
     # function to create a table within the database for passengers
     def create_customer_table(self):
-
         if self.test.cursor.tables(table="Customers", tableType="TABLE").fetchone():
 
             # stop the function and print message if table is already created
@@ -42,7 +41,6 @@ class People:
 
     # function to create a table within the database for the staff
     def create_employee_table(self):
-
         if self.test.cursor.tables(table="Employees", tableType="TABLE").fetchone():
 
             # stop the function and print message if table is already created
